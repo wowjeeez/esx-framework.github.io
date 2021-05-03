@@ -4071,7 +4071,7 @@
                 
                 
                 <h1 id="esxregisterservercallback">ESX.RegisterServerCallback<a class="headerlink" href="#esxregisterservercallback" title="Permanent link">&para;</a></h1>
-<div class="highlight"><pre><span></span><code><span class="n">ESX</span><span class="p">.</span><span class="n">RegisterServerCallback</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">cb</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">ESX</span><span class="p">.</span><span class="n">RegisterServerCallback</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">handler</span><span class="p">)</span>
 </code></pre></div>
 <p>This function registers a server callback.</p>
 <h2 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h2>
@@ -4100,14 +4100,26 @@
 <td>-</td>
 <td>Callback function, which contains an varied size of arguments depending on how many arguments parsed from client</td>
 </tr>
+<tr>
+<td>...args</td>
+<td>any</td>
+<td>No</td>
+<td>-</td>
+<td>The args provided after the handler on the client TriggerServerCallback</td>
+</tr>
 </tbody>
 </table>
 <h2 id="esxregisterservercallback-example">ESX.RegisterServerCallback Example<a class="headerlink" href="#esxregisterservercallback-example" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="n">ESX</span><span class="p">.</span><span class="n">RegisterServerCallback</span><span class="p">(</span><span class="s1">&#39;esx_myscript:setNewName&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">playerId</span><span class="p">,</span> <span class="n">newName</span><span class="p">,</span> <span class="n">cb</span><span class="p">)</span>
-    <span class="kd">local</span> <span class="n">xPlayer</span> <span class="o">=</span> <span class="n">ESX</span><span class="p">.</span><span class="n">GetPlayerFromId</span><span class="p">(</span><span class="n">playerId</span><span class="p">)</span>
-    <span class="n">xPlayer</span><span class="p">.</span><span class="n">setName</span><span class="p">(</span><span class="n">newName</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">myMemeServer</span> <span class="o">=</span> <span class="s1">&#39;Meme data string&#39;</span>
+<span class="c1">-- The first argument of the handler function is the player source (NetID),</span>
+<span class="c1">-- cb is the callback function we call when we want to return data to client</span>
+<span class="c1">-- subsequent parameters were the arguments called from the client.</span>
+<span class="n">ESX</span><span class="p">.</span><span class="n">RegisterServerCallback</span><span class="p">(</span><span class="s1">&#39;myScript:getMeme&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">cb</span><span class="p">,</span> <span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">)</span>
+  <span class="c1">-- Logic needed to derive whatever data you would like to send back</span>
+  <span class="c1">-- using the passed params on the handler (src, param1, param2, etc)</span>
 
-    <span class="n">cb</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+  <span class="c1">-- Send back our meme data to client handler</span>
+  <span class="n">cb</span><span class="p">(</span><span class="n">myMemeServer</span><span class="p">)</span>
 <span class="kr">end</span><span class="p">)</span>
 </code></pre></div>
                 
